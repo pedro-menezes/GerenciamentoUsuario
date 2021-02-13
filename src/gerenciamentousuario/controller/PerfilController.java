@@ -18,14 +18,16 @@ import java.util.ArrayList;
  * @author pedro-menezes
  */
 public class PerfilController {
-     // a conexão com o banco de dados
+    // a conexão com o banco de dados
+
     private Connection con;
 
     public PerfilController() {
         //inicializa a conexão com o BD
         this.con = new ConnectionFactory().getConnection();
     }
- public void adiciona(Perfil cargo) {
+
+    public void adiciona(Perfil cargo) {
         String sql = "insert into cargo (carNome) values (?)";
 
         try {
@@ -80,5 +82,17 @@ public class PerfilController {
             throw new RuntimeException(e);
         }
         return perfis;
+    }
+
+    public Perfil busca(String nome) {
+        ArrayList<Perfil> perfis = lista();
+
+        for (Perfil perfil : perfis) {
+            if (perfil.getNome().equals(nome)) {
+                return perfil;
+            }
+        }
+        
+        return null;
     }
 }

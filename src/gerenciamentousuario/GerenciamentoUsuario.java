@@ -5,9 +5,8 @@
  */
 package gerenciamentousuario;
 
-import gerenciamentousuario.controller.UsuarioController;
-import gerenciamentousuario.model.Usuario;
-import java.sql.Date;
+
+import gerenciamentousuario.view.Inicio;
 
 /**
  *
@@ -19,7 +18,6 @@ public class GerenciamentoUsuario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Usuario usu = new Usuario("111111111", "teste", new Date(2021, 10, 11), 'S');
-        new UsuarioController().adiciona(usu);
+        new Inicio();
     }    
 }

@@ -12,6 +12,13 @@ package gerenciamentousuario.model;
 public class Cargo {
     private String nome;
 
+    public Cargo(String nome) {
+        this.nome = nome;
+    }
+
+    public Cargo() {
+    }
+    
     public String getNome() {
         return nome;
     }

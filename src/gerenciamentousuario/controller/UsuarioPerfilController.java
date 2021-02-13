@@ -6,7 +6,8 @@
 package gerenciamentousuario.controller;
 
 import gerenciamentousuario.connection.ConnectionFactory;
-import gerenciamentousuario.model.Cargo;
+import gerenciamentousuario.model.Perfil;
+import gerenciamentousuario.model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,24 +18,25 @@ import java.util.ArrayList;
  *
  * @author pedro-menezes
  */
-public class CargoController {
-     // a conexão com o banco de dados
+public class UsuarioPerfilController {
     private Connection con;
 
-    public CargoController() {
+    public UsuarioPerfilController() {
         //inicializa a conexão com o BD
         this.con = new ConnectionFactory().getConnection();
     }
 
-    public void adiciona(Cargo cargo) {
-        String sql = "insert into cargo (carNome) values (?)";
+    public void adiciona(Perfil perfil, Usuario usuario) {
+        String sql = "insert into usuario_perfil (usp_usuCpf,usp_perNome) values (?,?)";
 
         try {
             // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
             // seta os valores
-            stmt.setString(1, cargo.getNome());
+            System.out.println("FOI");
+            stmt.setString(1, usuario.getCpf());
+            stmt.setString(2, perfil.getNome());
             // executa
             stmt.execute();
             stmt.close();
@@ -44,7 +46,7 @@ public class CargoController {
     }
 
     public void deleta(String nome) {
-        String sql = "delete from cargo where carNome = ?;";
+        String sql = "delete from perfil where carNome = ?;";
 
         try {
             // prepared statement para inserção
@@ -61,9 +63,9 @@ public class CargoController {
         }
     }
 
-    public ArrayList<Cargo> lista() {
-        String sql = "select * from cargo;";
-        ArrayList<Cargo> cargos = new ArrayList();
+    public ArrayList<Perfil> lista() {
+        String sql = "select * from perfil;";
+        ArrayList<Perfil> perfis = new ArrayList();
         try {
             // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -72,13 +74,14 @@ public class CargoController {
             ResultSet rs = stmt.executeQuery();
             //joga resultado da consulta no ArrayList
             while (rs.next()) {
-                Cargo cargo = new Cargo(rs.getString(1));
-                cargos.add(cargo);
+                Perfil perfil = new Perfil();
+                perfil.setNome(rs.getString(1));
+                perfis.add(perfil);
             }
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return cargos;
+        return perfis;
     }
 }

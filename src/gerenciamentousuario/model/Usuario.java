@@ -14,6 +14,8 @@ import java.sql.Date;
 public class Usuario extends Pessoa{
     private Cargo cargo;
     private ArrayList<Perfil> perfis;
+    
+    public Usuario() {}
 
     public Usuario(String cpf, String nome, Date dataNascimento, char sexo) {
         super(cpf, nome, dataNascimento, sexo);
