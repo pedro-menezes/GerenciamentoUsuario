@@ -36,4 +36,24 @@ public class Usuario extends Pessoa{
     public void setPerfis(ArrayList<Perfil> perfis) {
         this.perfis = perfis;
     }
+    
+    public String retornaTextoPerfis(){
+        String linhaPerfis = "";
+        for (Perfil perfil: getPerfis()) {
+            linhaPerfis += perfil.getNome()+"; ";
+        }
+        if (linhaPerfis.equals("")) {
+            return "Sem perfis cadastrados";
+        }
+        return linhaPerfis;
+    }
+    
+    public boolean verificaPerfil(Perfil perfil){
+        for (Perfil perfilAux : getPerfis()) {
+            if (perfil.getNome().equals(perfilAux.getNome())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

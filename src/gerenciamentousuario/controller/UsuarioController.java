@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @author pedro-menezes
  */
 public class UsuarioController {
-    
+
     // a conexão com o banco de dados
     private Connection con;
 
@@ -83,6 +83,7 @@ public class UsuarioController {
                 usuario.setNome(rs.getString(2));
                 usuario.setSexo(rs.getString(3).charAt(0));
                 usuario.setDataNascimento(rs.getDate(4));
+                usuario.setCargo(new Cargo(rs.getString(5)));
                 usuarios.add(usuario);
             }
             stmt.close();
@@ -90,5 +91,54 @@ public class UsuarioController {
             throw new RuntimeException(e);
         }
         return usuarios;
+    }
+
+    public Usuario busca(String cpf) {
+        String sql = "select * from usuario where usuCpf = ?;";
+        Usuario usuario = new Usuario();
+        try {
+            // prepared statement para inserção
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            // seta os valores
+            stmt.setString(1, cpf);
+
+            // executa
+            ResultSet rs = stmt.executeQuery();
+
+            //joga resultado da consulta no ArrayList
+            while (rs.next()) {
+                usuario.setCpf(rs.getString(1));
+                usuario.setNome(rs.getString(2));
+                usuario.setSexo(rs.getString(3).charAt(0));
+                usuario.setDataNascimento(rs.getDate(4));
+                usuario.setCargo(new Cargo(rs.getString(5)));
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuario;
+    }
+    
+    public void editar(Usuario usuario) {
+        String sql = "update usuario set usuNome = ?, usu_carNome = ?, usuSexo = ? where (usuCpf = ?);";
+        try {
+            // prepared statement para inserção
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            // seta os valores
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getCargo().getNome());
+            stmt.setString(3, String.valueOf(usuario.getSexo()));
+            stmt.setString(4, usuario.getCpf());
+
+            // executa
+            stmt.executeUpdate();
+
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

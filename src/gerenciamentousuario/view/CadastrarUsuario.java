@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -27,14 +28,14 @@ import javax.swing.text.MaskFormatter;
  *
  * @author pedro-menezes
  */
-public class CadastrarUsuario extends javax.swing.JFrame {
-
+public class CadastrarUsuario extends JFrame {
+    private Inicio origem;
     /**
      * Creates new form CadastrarUsuario
      */
-    public CadastrarUsuario(JFrame origem) throws ParseException {
+    public CadastrarUsuario(Inicio origem) throws ParseException {
         initComponents();
-        origem.setEnabled(false);
+        this.origem = origem;
         this.setVisible(true);
         addRadio();
         preencherCombo();
@@ -72,16 +73,17 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         textNasc = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar Usuário");
 
-        labelCpf.setText("CPF");
+        labelCpf.setText("CPF:");
 
-        labelNome.setText("Nome");
+        labelNome.setText("Nome:");
 
-        labelSexo.setText("Sexo");
+        labelSexo.setText("Sexo:");
 
-        labelCargo.setText("Cargo");
+        labelCargo.setText("Cargo:");
 
-        labelNasc.setText("Data de Nascimento");
+        labelNasc.setText("Data de Nascimento:");
 
         radioM.setText("Masculino");
         radioM.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +109,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         });
 
         labelTitulo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        labelTitulo.setText("Cadastra Usuário");
+        labelTitulo.setText("Cadastrar Usuário");
 
         tabelaPerfis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,7 +191,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 17, Short.MAX_VALUE))))
+                        .addGap(0, 14, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,9 +244,14 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         try {
             Usuario usuario = new Usuario(getCpf(), textNome.getText(), new java.sql.Date(converteData(textNasc.getText()).getTime()), radioSelecionado());
             new UsuarioController().adiciona(usuario, new Cargo(comboCargo.getSelectedItem().toString()));
-
             addPerfis(usuario);
+            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", "Cadastro de Usuário", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            origem.atualizarTabela();
+            origem.setEnabled(true);
+            
         } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro no cadastro",  "Cadastro de Usuário", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(CadastrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
 

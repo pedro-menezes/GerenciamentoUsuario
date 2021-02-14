@@ -5,25 +5,32 @@
  */
 package gerenciamentousuario.view;
 
+import gerenciamentousuario.controller.CargoController;
+import gerenciamentousuario.controller.PerfilController;
 import gerenciamentousuario.controller.UsuarioController;
+import gerenciamentousuario.controller.UsuarioPerfilController;
+import gerenciamentousuario.model.Cargo;
+import gerenciamentousuario.model.Perfil;
 import gerenciamentousuario.model.Usuario;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author pedro-menezes
  */
-public class Inicio extends javax.swing.JFrame {
+public class Inicio extends JFrame {
 
     /**
      * Creates new form index
      */
-    public Inicio() {
+    public Inicio() throws ParseException {
         initComponents();
-        preencherTabela();
+        atualizarTabela();
         this.setVisible(true);
     }
 
@@ -36,47 +43,23 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        labelTitulo = new javax.swing.JLabel();
+        panelPrincipal = new javax.swing.JPanel();
         buttonNovo = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        panelTabela = new javax.swing.JScrollPane();
         tabelaUsuario = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        buttonCadastro = new javax.swing.JButton();
+        comboTipo = new javax.swing.JComboBox<>();
+        radioAlfabetica = new javax.swing.JRadioButton();
+        labelTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciamento de Usuário");
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow"));
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(120, 167, 213));
+        panelPrincipal.setBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
 
-        jButton2.setText("Perfil");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(238, 238, 238)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        labelTitulo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        labelTitulo.setText("Usuários");
-
-        buttonNovo.setText("Novo");
+        buttonNovo.setText("Editar");
         buttonNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonNovoActionPerformed(evt);
@@ -85,66 +68,79 @@ public class Inicio extends javax.swing.JFrame {
 
         tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "CPF", "Nome", "Data de Nascimento", "Sexo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
+        ));
+        panelTabela.setViewportView(tabelaUsuario);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tabelaUsuario);
-
-        jButton1.setText("Cadastrar Usuário");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonCadastro.setText("Novo");
+        buttonCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCadastrar(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        comboTipo.setBackground(java.awt.SystemColor.controlLtHighlight);
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuário", "Cargo", "Perfil" }));
+        comboTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTipoActionPerformed(evt);
+            }
+        });
+
+        radioAlfabetica.setBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
+        radioAlfabetica.setText("Ordem Alfabética");
+        radioAlfabetica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAlfabeticaActionPerformed(evt);
+            }
+        });
+
+        labelTitulo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("Gerenciamento de Usuários");
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
-                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                        .addGap(133, 133, 133)
-                        .addComponent(buttonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelTabela)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(buttonCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 674, Short.MAX_VALUE)
+                        .addComponent(buttonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(radioAlfabetica)))
                 .addContainerGap())
+            .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioAlfabetica))
+                .addGap(9, 9, 9)
+                .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonNovo)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttonCadastro))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,17 +148,15 @@ public class Inicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -170,44 +164,101 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNovoActionPerformed
-        // TODO add your handling code here:
+        String selecionado = comboTipo.getSelectedItem().toString();
+        if (selecionado.equals("Usuário")) {
+            new EditarUsuario(this);
+        }
     }//GEN-LAST:event_buttonNovoActionPerformed
 
     private void jButtonCadastrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrar
         try {
-            new CadastrarUsuario(this);
+            String selecionado = comboTipo.getSelectedItem().toString();
+            if (selecionado.equals("Usuário")) {
+                new CadastrarUsuario(this);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonCadastrar
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
+        try {
+            atualizarTabela();
+        } catch (ParseException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboTipoActionPerformed
+
+    private void radioAlfabeticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAlfabeticaActionPerformed
+        
+    }//GEN-LAST:event_radioAlfabeticaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCadastro;
     private javax.swing.JButton buttonNovo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JScrollPane panelTabela;
+    private javax.swing.JRadioButton radioAlfabetica;
     private javax.swing.JTable tabelaUsuario;
     // End of variables declaration//GEN-END:variables
 
-    private void preencherTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaUsuario.getModel();
-        modelo.setNumRows(0);
-        
-        for (Usuario usuario : new UsuarioController().lista()) {
-            modelo.addRow(new Object[]{
-                usuario.getCpf(),
-                usuario.getNome(),
-                usuario.getDataNascimento(),
-                usuario.getSexo()
-            });
+    public void atualizarTabela() throws ParseException {
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        String selecionado = comboTipo.getSelectedItem().toString();
+
+        switch (selecionado) {
+            case "Usuário": {
+                modelo.addColumn("CPF");
+                modelo.addColumn("Nome");
+                modelo.addColumn("Data de Nascimento");
+                modelo.addColumn("Sexo");
+                modelo.addColumn("Cargo");
+                modelo.addColumn("Perfis");
+                for (Usuario usuario : new UsuarioController().lista()) {
+                    new UsuarioPerfilController().buscaPerfis(usuario);
+                    modelo.addRow(new Object[]{
+                        usuario.getCpf(),
+                        usuario.getNome(),
+                        converteData(usuario.getDataNascimento().toString()),
+                        usuario.getSexo(),
+                        usuario.getCargo().getNome(),
+                        usuario.retornaTextoPerfis()
+                    });
+                }
+                break;
+            }
+            case "Perfil": {
+                modelo.addColumn("Nome");
+                for (Perfil perfil : new PerfilController().lista()) {
+                    modelo.addRow(new Object[]{
+                        perfil.getNome()
+                    });
+                }
+                break;
+            }
+            case "Cargo": {
+                modelo.addColumn("Nome");
+                modelo.setColumnCount(1);
+                for (Cargo cargo : new CargoController().lista()) {
+                    modelo.addRow(new Object[]{
+                        cargo.getNome()
+                    });
+                }
+            }
         }
+        tabelaUsuario.setModel(modelo);
+        tabelaUsuario.setEnabled(false);
+    }
+    
+    private String converteData(String texto) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date aux = sdf.parse(texto);
+        sdf.applyPattern("dd/MM/yyyy");
+        String r = sdf.format(aux);
+        return r;
     }
 }
