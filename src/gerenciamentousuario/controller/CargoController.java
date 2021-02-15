@@ -14,28 +14,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe responsável por realizar operações sobre o tipo e tabela Cargo
+ * entre os sistemas: banco de dados, view e model.
  * @author pedro-menezes
  */
 public class CargoController {
-     // a conexão com o banco de dados
     private Connection con;
 
+    /**
+     * Construtor que recebe valores da conexão.
+     */
     public CargoController() {
-        //inicializa a conexão com o BD
         this.con = new ConnectionFactory().getConnection();
     }
-
+    
+    /**
+     * Método que recebe um objeto do tipo cargo e adiciona a tabela cargo no 
+     * banco de dados.
+     * @param cargo - Cargo - objeto com valores que serão adicionados no banco de dados.
+     */
     public void adiciona(Cargo cargo) {
         String sql = "insert into cargo (carNome) values (?)";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, cargo.getNome());
-            // executa
+            
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
@@ -43,34 +48,37 @@ public class CargoController {
         }
     }
 
+    /**
+     * Método que recebe o nome de um cargo e faz a exclusão do mesmo no banco de dados.
+     * @param nome - String - nome do cargo que será deletado do banco de dados.
+     */
     public void deleta(String nome) {
         String sql = "delete from cargo where carNome = ?;";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, nome);
 
-            // executa
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
+    
+    /**
+     * Método que retorna todos os cargos e e seus atributos do banco de dados.
+     * @return lista - ArrayList - lista de cargos buscados no banco.
+     */
     public ArrayList<Cargo> lista() {
         String sql = "select * from cargo;";
         ArrayList<Cargo> cargos = new ArrayList();
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // executa
             ResultSet rs = stmt.executeQuery();
-            //joga resultado da consulta no ArrayList
+            
             while (rs.next()) {
                 Cargo cargo = new Cargo(rs.getString(1));
                 cargos.add(cargo);
@@ -80,5 +88,26 @@ public class CargoController {
             throw new RuntimeException(e);
         }
         return cargos;
+    }
+    
+    /**
+     * Método que atualiza informações de um determinado cargo no BD.
+     * @param cargo - Cargo - objeto com informações para serem atualizadas no banco de dados.
+     * @param nomeAntigo - String - nome do cargo antes de ser atualizado.
+     */
+    public void editar(Cargo cargo, String nomeAntigo) {
+        String sql = "update cargo set carNome = ? where (carNome = ?);";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, cargo.getNome());
+            stmt.setString(2, nomeAntigo);
+
+            stmt.executeUpdate();
+
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

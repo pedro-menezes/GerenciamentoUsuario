@@ -25,13 +25,14 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 /**
- *
+ * Tela de cadastrar usuário e vincular os perfis a eles.
  * @author pedro-menezes
  */
 public class CadastrarUsuario extends JFrame {
     private Inicio origem;
     /**
-     * Creates new form CadastrarUsuario
+     * Construtor que recebe janela de inicio para executar funções.
+     * @param origem - Inicio - janela inicial.
      */
     public CadastrarUsuario(Inicio origem) throws ParseException {
         initComponents();
@@ -74,6 +75,7 @@ public class CadastrarUsuario extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Usuário");
+        setResizable(false);
 
         labelCpf.setText("CPF:");
 
@@ -86,11 +88,6 @@ public class CadastrarUsuario extends JFrame {
         labelNasc.setText("Data de Nascimento:");
 
         radioM.setText("Masculino");
-        radioM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioMActionPerformed(evt);
-            }
-        });
 
         radioF.setText("Feminino");
 
@@ -157,41 +154,37 @@ public class CadastrarUsuario extends JFrame {
                         .addComponent(labelTitulo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelNasc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelSexo)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(radioM)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioF))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelNome)
+                                    .addComponent(labelCpf))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textNome)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelCargo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboCargo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelNasc)
-                                        .addGap(6, 6, 6)
-                                        .addComponent(textNasc))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(labelSexo)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(radioM)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(radioF))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(labelNome)
-                                                    .addComponent(labelCpf))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(textNome)
-                                                    .addComponent(textCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                                        .addComponent(textCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(labelCargo)
+                            .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,10 +214,10 @@ public class CadastrarUsuario extends JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelNasc)
                             .addComponent(textNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCargo)))
+                        .addGap(31, 31, 31)
+                        .addComponent(labelCargo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -235,14 +228,13 @@ public class CadastrarUsuario extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void radioMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioMActionPerformed
-
+    /**
+     * Método que realiza o cadastro no sistema após o botão cadastrar ser apertado.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void buttonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCadastrarActionPerformed
         try {
-            Usuario usuario = new Usuario(getCpf(), textNome.getText(), new java.sql.Date(converteData(textNasc.getText()).getTime()), radioSelecionado());
+            Usuario usuario = new Usuario(getCpf(), textNome.getText(), new java.sql.Date(converteData(textNasc.getText()).getTime()), radioSelecionado(),  new java.sql.Date(System.currentTimeMillis()));
             new UsuarioController().adiciona(usuario, new Cargo(comboCargo.getSelectedItem().toString()));
             addPerfis(usuario);
             JOptionPane.showMessageDialog(this, "Cadastrado com sucesso", "Cadastro de Usuário", JOptionPane.INFORMATION_MESSAGE);
@@ -256,7 +248,10 @@ public class CadastrarUsuario extends JFrame {
         }
 
     }//GEN-LAST:event_buttonCadastrarActionPerformed
-
+    /**
+     * Método referente ao botão cancelar, que após apertado fecha a janela.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
@@ -283,6 +278,10 @@ public class CadastrarUsuario extends JFrame {
     private javax.swing.JTextField textNome;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Método que verifica qual radioButton está selecionado e retorna o sexo.
+     * @return char - sexo seleciona 'M' ou 'F'.
+     */
     private char radioSelecionado() {
         if (radioF.isSelected()) {
             return 'F';
@@ -291,6 +290,12 @@ public class CadastrarUsuario extends JFrame {
         }
     }
 
+    /**
+     * Método que recebe data no formato normal e retorna no formato para o banco de dados.
+     * @param texto - String - data no formato padrão.
+     * @return Date - data convertida para formato do sql.
+     * @throws ParseException tratamento de erro.
+     */
     private Date converteData(String texto) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date aux = sdf.parse(texto);
@@ -299,17 +304,26 @@ public class CadastrarUsuario extends JFrame {
         return sdf.parse(r);
     }
 
+    /**
+     * Método que adiciona os dosi radioButtons em um grupo.
+     */
     private void addRadio() {
         buttonGroup.add(radioF);
         buttonGroup.add(radioM);
     }
-
+    
+    /**
+     * Método que preenche comboBox com cargos.
+     */
     private void preencherCombo() {
         for (Cargo cargo : new CargoController().lista()) {
             comboCargo.addItem(cargo.getNome());
         }
     }
 
+    /**
+     * Método que preenche a tabela de perfis para serem adicionados ao usuário.
+     */
     private void preencherTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPerfis.getModel();
         modelo.setNumRows(0);
@@ -320,7 +334,11 @@ public class CadastrarUsuario extends JFrame {
             });
         }
     }
-
+    
+    /**@Override
+     * Método que adiciona os perfis marcados ao usuário criado.
+     * @param usuario Usuario - usuário que deve ser adicionado os perfis.
+     */
     private void addPerfis(Usuario usuario) {
         ArrayList<String> nomesPerfis = new ArrayList<>();
         int linhas = tabelaPerfis.getRowCount();
@@ -337,6 +355,10 @@ public class CadastrarUsuario extends JFrame {
         }
     }
 
+    /**
+     * Método para adicionar máscara de data e CPF as entradas de texto.
+     * @throws ParseException tratamento de erro.
+     */
     private void addMask() throws ParseException {
         MaskFormatter CPFMask = new MaskFormatter("###.###.###-##");
         MaskFormatter dataMask = new MaskFormatter("##/##/####");
@@ -349,6 +371,10 @@ public class CadastrarUsuario extends JFrame {
         textNasc.setFormatterFactory(new DefaultFormatterFactory(dataMask));
     }
 
+    /**
+     * Método que retira as pontuações do CPF.
+     * @return String - CPF formatado apenas com números.
+     */
     private String getCpf() {
         String cpf = textCpf.getText().replace(".", "");
         cpf = cpf.replace("-", "");

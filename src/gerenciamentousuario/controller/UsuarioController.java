@@ -15,51 +15,55 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe responsável por realizar operações sobre o tipo e tabela Usuario
+ * entre os sistemas: banco de dados, view e model.
  * @author pedro-menezes
  */
 public class UsuarioController {
-
-    // a conexão com o banco de dados
     private Connection con;
 
     public UsuarioController() {
-        //inicializa a conexão com o BD
         this.con = new ConnectionFactory().getConnection();
     }
 
-    public void adiciona(Usuario contato, Cargo cargo) {
-        String sql = "insert into usuario (usuCpf,usuNome,usuSexo,usuDateNasc,usu_carNome) values (?,?,?,?,?)";
+    /**
+     * Método que recebe um objeto do tipo Usuario e o seu cargo e adiciona a tabela cargo no 
+     * banco de dados.
+     * @param usuario - Usuario - usuario que será adicionado no banco.
+     * @param cargo - Cargo - cargo do usuário.
+     */
+    public void adiciona(Usuario usuario, Cargo cargo) {
+        String sql = "insert into usuario (usuCpf,usuNome,usuSexo,usuDateNasc,usu_carNome,usuDataCadastro) values (?,?,?,?,?,?)";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
-            stmt.setString(1, contato.getCpf());
-            stmt.setString(2, contato.getNome());
-            stmt.setString(3, String.valueOf(contato.getSexo()));
-            stmt.setDate(4, contato.getDataNascimento());
+            stmt.setString(1, usuario.getCpf());
+            stmt.setString(2, usuario.getNome());
+            stmt.setString(3, String.valueOf(usuario.getSexo()));
+            stmt.setDate(4, usuario.getDataNascimento());
             stmt.setString(5, cargo.getNome());
-            // executa
+            stmt.setDate(6, usuario.getDataCadastro());
+            
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
+    
+    /**
+     * Mátodo que recebe o CPF de um usuário e o deleta do banco de dados.
+     * @param cpf - String - CPF do usuário que deve ser deletado.
+     */
     public void deleta(String cpf) {
         String sql = "delete from usuario where usuCpf = ?;";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, cpf);
 
-            // executa
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
@@ -67,16 +71,17 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Método que retorna uma lista com todos os usuários cadastrados no BD.
+     * @return - ArrayList - lista com usuários cadastrados no banco.
+     */
     public ArrayList<Usuario> lista() {
         String sql = "select * from usuario;";
         ArrayList<Usuario> usuarios = new ArrayList();
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // executa
             ResultSet rs = stmt.executeQuery();
-            //joga resultado da consulta no ArrayList
             while (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setCpf(rs.getString(1));
@@ -93,26 +98,28 @@ public class UsuarioController {
         return usuarios;
     }
 
+    /**
+     * Método que busca um usuário no banco de dados através do CPF.
+     * @param cpf - String - CPF do usuário que deseja ser encontrado.
+     * @return Usuario = retorna usuário encontrado.
+     */
     public Usuario busca(String cpf) {
         String sql = "select * from usuario where usuCpf = ?;";
         Usuario usuario = new Usuario();
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, cpf);
 
-            // executa
             ResultSet rs = stmt.executeQuery();
 
-            //joga resultado da consulta no ArrayList
             while (rs.next()) {
                 usuario.setCpf(rs.getString(1));
                 usuario.setNome(rs.getString(2));
                 usuario.setSexo(rs.getString(3).charAt(0));
                 usuario.setDataNascimento(rs.getDate(4));
                 usuario.setCargo(new Cargo(rs.getString(5)));
+                usuario.setDataCadastro(rs.getDate(6));
             }
             stmt.close();
         } catch (SQLException e) {
@@ -121,19 +128,20 @@ public class UsuarioController {
         return usuario;
     }
     
+    /**
+     * Método que edita um usuário no banco de dados.
+     * @param usuario - Usuario - usuario que deseja ser alterado.
+     */
     public void editar(Usuario usuario) {
         String sql = "update usuario set usuNome = ?, usu_carNome = ?, usuSexo = ? where (usuCpf = ?);";
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getCargo().getNome());
             stmt.setString(3, String.valueOf(usuario.getSexo()));
             stmt.setString(4, usuario.getCpf());
 
-            // executa
             stmt.executeUpdate();
 
             stmt.close();

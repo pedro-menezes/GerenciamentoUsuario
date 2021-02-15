@@ -10,12 +10,12 @@ import gerenciamentousuario.view.Inicio;
 import java.text.ParseException;
 
 /**
- *
+ * Classe pricnipal responsável por iniciar o sistema.
  * @author pedro-menezes
  */
 public class GerenciamentoUsuario {
 
-    /**
+    /** Método principal.
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ParseException {

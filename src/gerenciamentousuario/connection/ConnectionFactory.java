@@ -10,11 +10,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
+ * Classe responsável pelo conexão do sistema com o banco de dados através da 
+ * biblioteca mysql-connector-java-8.0.22.jar.
  * @author pedro-menezes
  */
 public class ConnectionFactory {
-
+    /**
+     * Método que retorna informações sobre a conexão: nome do banco, usuário e senha.
+     * @return Connection - informações necessárias pra conexão.
+     */
     public Connection getConnection() {
         try {
              Class.forName("com.mysql.cj.jdbc.Driver");

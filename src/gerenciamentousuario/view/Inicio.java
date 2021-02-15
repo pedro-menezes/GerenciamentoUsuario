@@ -16,21 +16,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Tela inicial que lista todos os tipos de classe e oferece o menu de 
+ * Cadastar, Editar e Excluir.
  * @author pedro-menezes
  */
 public class Inicio extends JFrame {
-
     /**
-     * Creates new form index
+     * Construtor simples que inicializa os componentes.
+     * @throws ParseException - tratamento de erro.
      */
     public Inicio() throws ParseException {
         initComponents();
         atualizarTabela();
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setVisible(true);
     }
 
@@ -44,12 +47,11 @@ public class Inicio extends JFrame {
     private void initComponents() {
 
         panelPrincipal = new javax.swing.JPanel();
-        buttonNovo = new javax.swing.JButton();
+        buttonEditar = new javax.swing.JButton();
         panelTabela = new javax.swing.JScrollPane();
         tabelaUsuario = new javax.swing.JTable();
         buttonCadastro = new javax.swing.JButton();
         comboTipo = new javax.swing.JComboBox<>();
-        radioAlfabetica = new javax.swing.JRadioButton();
         labelTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,10 +61,10 @@ public class Inicio extends JFrame {
 
         panelPrincipal.setBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
 
-        buttonNovo.setText("Editar");
-        buttonNovo.addActionListener(new java.awt.event.ActionListener() {
+        buttonEditar.setText("Editar");
+        buttonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonNovoActionPerformed(evt);
+                buttonEditarActionPerformed(evt);
             }
         });
 
@@ -94,14 +96,6 @@ public class Inicio extends JFrame {
             }
         });
 
-        radioAlfabetica.setBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
-        radioAlfabetica.setText("Ordem Alfabética");
-        radioAlfabetica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAlfabeticaActionPerformed(evt);
-            }
-        });
-
         labelTitulo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Gerenciamento de Usuários");
@@ -116,12 +110,11 @@ public class Inicio extends JFrame {
                     .addComponent(panelTabela)
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(buttonCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 674, Short.MAX_VALUE)
-                        .addComponent(buttonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1174, Short.MAX_VALUE)
+                        .addComponent(buttonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(radioAlfabetica)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -131,14 +124,12 @@ public class Inicio extends JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioAlfabetica))
+                .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonNovo)
+                    .addComponent(buttonEditar)
                     .addComponent(buttonCadastro))
                 .addContainerGap())
         );
@@ -162,25 +153,42 @@ public class Inicio extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void buttonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNovoActionPerformed
+    /**
+     * Método que ao clickar no botão abre alguma janela de editar, de acordo com o item selecionado no comboBox.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
+    private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
         String selecionado = comboTipo.getSelectedItem().toString();
         if (selecionado.equals("Usuário")) {
             new EditarUsuario(this);
+        } else if (selecionado.equals("Cargo")) {
+            new EditarCargo(this);
+        } else if (selecionado.equals("Perfil")) {
+            new EditarPerfil(this);
         }
-    }//GEN-LAST:event_buttonNovoActionPerformed
-
+    }//GEN-LAST:event_buttonEditarActionPerformed
+    /**
+     * Método que ao clickar no botão abre alguma janela de cadastrar, de acordo com o item selecionado no comboBox.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void jButtonCadastrar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrar
         try {
             String selecionado = comboTipo.getSelectedItem().toString();
             if (selecionado.equals("Usuário")) {
                 new CadastrarUsuario(this);
+            } else if (selecionado.equals("Cargo")) {
+                new CadastrarCargo(this);
+            } else if (selecionado.equals("Perfil")) {
+                new CadastrarPerfil(this);
             }
         } catch (ParseException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonCadastrar
-
+    /**
+     * Método que ao selecionar um novo item no comboBox, chama o método para atualizar a tabela de listagem.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
         try {
             atualizarTabela();
@@ -189,22 +197,19 @@ public class Inicio extends JFrame {
         }
     }//GEN-LAST:event_comboTipoActionPerformed
 
-    private void radioAlfabeticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAlfabeticaActionPerformed
-        
-    }//GEN-LAST:event_radioAlfabeticaActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCadastro;
-    private javax.swing.JButton buttonNovo;
+    private javax.swing.JButton buttonEditar;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JScrollPane panelTabela;
-    private javax.swing.JRadioButton radioAlfabetica;
     private javax.swing.JTable tabelaUsuario;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * Método para atualizar tabela de acordo com item selecionado no comboBox.
+     * @throws ParseException - tratamento de erro.
+     */
     public void atualizarTabela() throws ParseException {
         DefaultTableModel modelo = new DefaultTableModel();
 
@@ -212,6 +217,7 @@ public class Inicio extends JFrame {
 
         switch (selecionado) {
             case "Usuário": {
+                buttonEditar.setText("Editar");
                 modelo.addColumn("CPF");
                 modelo.addColumn("Nome");
                 modelo.addColumn("Data de Nascimento");
@@ -232,15 +238,17 @@ public class Inicio extends JFrame {
                 break;
             }
             case "Perfil": {
+                buttonEditar.setText("Editar/Excluir");
                 modelo.addColumn("Nome");
                 for (Perfil perfil : new PerfilController().lista()) {
                     modelo.addRow(new Object[]{
-                        perfil.getNome()
+                        perfil.getNome(),
                     });
                 }
                 break;
             }
             case "Cargo": {
+                buttonEditar.setText("Editar");
                 modelo.addColumn("Nome");
                 modelo.setColumnCount(1);
                 for (Cargo cargo : new CargoController().lista()) {
@@ -254,7 +262,13 @@ public class Inicio extends JFrame {
         tabelaUsuario.setEnabled(false);
     }
     
-    private String converteData(String texto) throws ParseException{
+    /**
+     * Método que recebe data no formato do sql e retorna no formato padrão.
+     * @param texto - String - data no formato sql.
+     * @return Date - data convertida para formato padrão.
+     * @throws ParseException tratamento de erro.
+     */
+    private String converteData(String texto) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date aux = sdf.parse(texto);
         sdf.applyPattern("dd/MM/yyyy");

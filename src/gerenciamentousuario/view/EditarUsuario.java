@@ -23,17 +23,16 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Tela para editar usuario.
  * @author pedro-menezes
  */
 public class EditarUsuario extends JFrame {
-
-    JFrame origem;
-
+    private Inicio origem;
     /**
-     * Creates new form EditarUsuario
+     * Construtor que recebe janela de inicio para executar funções.
+     * @param origem - Inicio - janela inicial.
      */
-    public EditarUsuario(JFrame origem) {
+    public EditarUsuario(Inicio origem) {
         initComponents();
         preencherComboCpf();
         addRadio();
@@ -63,7 +62,6 @@ public class EditarUsuario extends JFrame {
         jLabel7 = new javax.swing.JLabel();
         comboCargo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        labelDataCadastro = new javax.swing.JLabel();
         buttonCancelar = new javax.swing.JButton();
         buttonConfirmar = new javax.swing.JButton();
         textNome = new javax.swing.JTextField();
@@ -71,8 +69,9 @@ public class EditarUsuario extends JFrame {
         tabelaPerfis = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         textDataNasc = new javax.swing.JTextField();
+        textDataCadastro = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar Usuário");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -99,8 +98,6 @@ public class EditarUsuario extends JFrame {
         jLabel7.setText("Cargo:");
 
         jLabel8.setText("Data de Cadastro:");
-
-        labelDataCadastro.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
         buttonCancelar.setText("Cancelar");
         buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,13 +145,15 @@ public class EditarUsuario extends JFrame {
 
         textDataNasc.setEditable(false);
 
+        textDataCadastro.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,23 +176,29 @@ public class EditarUsuario extends JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textDataNasc))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(labelDataCadastro))
-                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(2, 2, 2)
+                        .addComponent(textDataCadastro))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 19, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(122, 122, 122))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(108, 108, 108))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(buttonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -232,7 +237,7 @@ public class EditarUsuario extends JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(labelDataCadastro))
+                            .addComponent(textDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
@@ -244,24 +249,34 @@ public class EditarUsuario extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Método que chama funções quando um novo item é selecionado no comboBox de CPF.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void comboCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCpfActionPerformed
         preencherTabela();
         atualizarInfos();
         preencherComboCargo();
     }//GEN-LAST:event_comboCpfActionPerformed
-
+    /**
+     * Método referente ao botão cancelar, que após apertado fecha a janela.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
-
+    /**
+     * Método que realiza a edição no sistema após o botão confirmar ser apertado.
+     * @param evt - ActionEvent - evento de click recebido pelo sistema.
+     */
     private void buttonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmarActionPerformed
         try {
-            Usuario usuario = new Usuario(comboCpf.getSelectedItem().toString(), textNome.getText(), new java.sql.Date(converteData(textDataNasc.getText()).getTime()), radioSelecionado());
+            Usuario usuario = new Usuario(comboCpf.getSelectedItem().toString(), textNome.getText(), new java.sql.Date(converteData(textDataNasc.getText()).getTime()), radioSelecionado(), new Date(System.currentTimeMillis()));
             usuario.setCargo(new Cargo(comboCargo.getSelectedItem().toString()));
             new UsuarioController().editar(usuario);
             configuraPerfis(usuario);
             JOptionPane.showMessageDialog(this, "Atualizado com sucesso", "Editar Usuário", JOptionPane.INFORMATION_MESSAGE);
+            origem.atualizarTabela();
             this.dispose();
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Atualizado com sucesso", "Editar Usuário", JOptionPane.ERROR_MESSAGE);
@@ -285,20 +300,26 @@ public class EditarUsuario extends JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel labelDataCadastro;
     private javax.swing.JRadioButton radioF;
     private javax.swing.JRadioButton radioM;
     private javax.swing.JTable tabelaPerfis;
+    private javax.swing.JTextField textDataCadastro;
     private javax.swing.JTextField textDataNasc;
     private javax.swing.JTextField textNome;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * Método que adiciona os dosi radioButtons em um grupo.
+     */
     private void addRadio() {
         buttonGroup.add(radioF);
         buttonGroup.add(radioM);
     }
 
+    /**
+     * Método que preenche comboBox com cargos e seleciona o atual cargo do usuário.
+     */
     private void preencherComboCargo() {
+        comboCargo.removeAllItems();
         Usuario usuario = new UsuarioController().busca(comboCpf.getSelectedItem().toString());
         for (Cargo cargo : new CargoController().lista()) {
             comboCargo.addItem(cargo.getNome());
@@ -307,13 +328,20 @@ public class EditarUsuario extends JFrame {
             }
         }
     }
-
+    
+    /**
+     * Método que preenche comboBox com CPF.
+     */
     private void preencherComboCpf() {
         for (Usuario usuario : new UsuarioController().lista()) {
             comboCpf.addItem(usuario.getCpf());
         }
     }
-
+    
+    /**
+     * Método que preenche a tabela de perfis e seleciona os que estão cadastrados
+     * pelo usuário.
+     */
     private void preencherTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPerfis.getModel();
         modelo.setNumRows(0);
@@ -333,12 +361,16 @@ public class EditarUsuario extends JFrame {
             });
         }
     }
-
+    
+    /**
+     * Método que atualiza as informações de acordo com o CPF selecionado co comboBox.
+     */
     private void atualizarInfos() {
         Usuario usuario = new UsuarioController().busca(comboCpf.getSelectedItem().toString());
 
         textNome.setText(usuario.getNome());
         textDataNasc.setText(usuario.getDataNascimento().toString());
+        textDataCadastro.setText(usuario.getDataCadastro().toString());
 
         if (usuario.getSexo() == 'M') {
             radioM.setSelected(true);
@@ -356,7 +388,11 @@ public class EditarUsuario extends JFrame {
         String r = sdf.format(aux);
         return sdf.parse(r);
     }
-
+    
+    /**
+     * Método que verifica qual radioButton está selecionado e retorna o sexo.
+     * @return char - sexo seleciona 'M' ou 'F'.
+     */
     private char radioSelecionado() {
         if (radioF.isSelected()) {
             return 'F';
@@ -365,6 +401,10 @@ public class EditarUsuario extends JFrame {
         }
     }
 
+    /**
+     * Método que adiciona e remove os perfis marcados e desmarcados ao usuário criado.
+     * @param usuario Usuario - usuário que deve ser adicionado e removido os perfis.
+     */
     private void configuraPerfis(Usuario usuario) {
         ArrayList<String> perfisAdd = new ArrayList<>();
         ArrayList<String> perfisRemove = new ArrayList<>();
@@ -386,7 +426,9 @@ public class EditarUsuario extends JFrame {
         }
         
         for (String nomePerfil : perfisRemove) {
-            usuPerController.deleta(usuario.getCpf(), nomePerfil);
+            if (usuPerController.existe(usuario.getCpf(), nomePerfil)) {
+                usuPerController.deleta(usuario.getCpf(), nomePerfil);
+            }
         }
     }
 }

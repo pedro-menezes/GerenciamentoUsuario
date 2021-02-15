@@ -62,13 +62,12 @@
                       <Component id="panelTabela" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="buttonCadastro" min="-2" pref="250" max="-2" attributes="0"/>
-                          <EmptySpace pref="674" max="32767" attributes="0"/>
-                          <Component id="buttonNovo" min="-2" pref="252" max="-2" attributes="0"/>
+                          <EmptySpace pref="1174" max="32767" attributes="0"/>
+                          <Component id="buttonEditar" min="-2" pref="252" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="comboTipo" min="-2" pref="265" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="radioAlfabetica" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -82,15 +81,12 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="labelTitulo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="comboTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="radioAlfabetica" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="comboTipo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="panelTabela" min="-2" pref="412" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="buttonNovo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="buttonEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="buttonCadastro" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -99,12 +95,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="buttonNovo">
+        <Component class="javax.swing.JButton" name="buttonEditar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNovoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditarActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="panelTabela">
@@ -150,17 +146,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="radioAlfabetica">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="cc" green="b8" id="CheckBoxMenuItem.selectionBackground" palette="3" red="a3" type="palette"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Ordem Alfab&#xe9;tica"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioAlfabeticaActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTitulo">
           <Properties>

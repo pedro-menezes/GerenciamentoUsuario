@@ -14,29 +14,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe responsável por realizar operações sobre o tipo e tabela Perfil entre
+ * os sistemas: banco de dados, view e model.
  * @author pedro-menezes
  */
 public class PerfilController {
-    // a conexão com o banco de dados
 
     private Connection con;
 
+    /**
+     * Construtor que recebe valores da conexão.
+     */
     public PerfilController() {
-        //inicializa a conexão com o BD
         this.con = new ConnectionFactory().getConnection();
     }
 
-    public void adiciona(Perfil cargo) {
-        String sql = "insert into cargo (carNome) values (?)";
+    /**
+     * Método que recebe um objeto do tipo perfil e adiciona a tabela perfil no
+     * banco de dados.
+     * @param perfil - Perfil - objeto com valores que serão adicionados no
+     * banco de dados.
+     */
+    public void adiciona(Perfil perfil) {
+        String sql = "insert into perfil (perNome) values (?)";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
-            stmt.setString(1, cargo.getNome());
-            // executa
+            stmt.setString(1, perfil.getNome());
+
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
@@ -44,17 +50,19 @@ public class PerfilController {
         }
     }
 
+    /**
+     * Método que recebe o nome de um perfil e faz a exclusão do mesmo no banco
+     * de dados.
+     * @param nome - String - nome do perfil que será deletado do banco de dados.
+     */
     public void deleta(String nome) {
-        String sql = "delete from perfil where carNome = ?;";
+        String sql = "delete from perfil where perNome = ?;";
 
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // seta os valores
             stmt.setString(1, nome);
 
-            // executa
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
@@ -62,16 +70,18 @@ public class PerfilController {
         }
     }
 
+    /**
+     * Método que retorna todos os perfis e e seus atributos do banco de dados.
+     * @return lista - ArrayList - lista de perfis buscados no banco.
+     */
     public ArrayList<Perfil> lista() {
         String sql = "select * from perfil;";
         ArrayList<Perfil> perfis = new ArrayList();
         try {
-            // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            // executa
             ResultSet rs = stmt.executeQuery();
-            //joga resultado da consulta no ArrayList
+
             while (rs.next()) {
                 Perfil perfil = new Perfil();
                 perfil.setNome(rs.getString(1));
@@ -83,7 +93,12 @@ public class PerfilController {
         }
         return perfis;
     }
-
+    
+    /**
+     * Método que busca um perfil pelo nome no banco de dados.
+     * @param nome - String - nome do perfil que será buscado.
+     * @return Perfil - perfil buscado.
+     */
     public Perfil busca(String nome) {
         ArrayList<Perfil> perfis = lista();
 
@@ -92,7 +107,28 @@ public class PerfilController {
                 return perfil;
             }
         }
-        
+
         return null;
+    }
+    
+    /**
+     * Método que atualiza informações de um determinado cargo no BD.
+     * @param perfil - Perfil - objeto com informações para serem atualizadas no banco de dados.
+     * @param nomeAntigo - String - nome do perfil antes de ser atualizado.
+     */
+    public void editar(Perfil perfil, String nomeAntigo) {
+        String sql = "update perfil set perNome = ? where (perNome = ?);";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, perfil.getNome());
+            stmt.setString(2, nomeAntigo);
+
+            stmt.executeUpdate();
+
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
